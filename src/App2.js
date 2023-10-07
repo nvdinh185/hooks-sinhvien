@@ -49,18 +49,12 @@ const App = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formValue = {};
-        for (const el of e.target) {
-            if (el.name) {
-                formValue[el.name] = el.value;
-            }
-        }
         var check = true;
-        if (!formValue['name']) {
+        if (!name) {
             setErrorName('Vui lòng nhập tên');
             check = false;
         }
-        if (!formValue['address']) {
+        if (!address) {
             setErrorAddress('Vui lòng nhập địa chỉ');
             check = false;
         }
@@ -73,21 +67,29 @@ const App = () => {
         }
 
         if (check) {
-            if (formValue['id']) {
-                var edId = formValue['id'];
+            if (isEdit) {
                 var newList = [...listStudents];
-                var idx = newList.findIndex(student => student.id == edId);
-                newList.splice(idx, 1, formValue);
+                var idx = newList.findIndex(student => student.id == id);
+                var inputValue = {
+                    id,
+                    name,
+                    address
+                }
+                newList.splice(idx, 1, inputValue);
                 setListStudents(newList);
                 setId('');
                 setName('');
                 setAddress('');
                 setIsEdit(false);
             } else {
-                formValue['id'] = generateUuid();
+                var inputValue = {
+                    id: generateUuid(),
+                    name,
+                    address
+                }
                 var newList = [
                     ...listStudents,
-                    formValue
+                    inputValue
                 ]
                 setListStudents(newList);
                 setName('');
@@ -128,7 +130,7 @@ const App = () => {
         if (confirm('Bạn có chắc muốn xóa ?')) {
             var newList = [...listStudents];
             var idx = newList.findIndex(st => st.id == student.id);
-            newList.splice(idx, 1);
+            newList.splice(idx, 2);
             setListStudents(newList);
         }
     }
