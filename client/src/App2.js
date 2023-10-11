@@ -1,53 +1,26 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 
-var initialStudents = [
-    {
-        id: '1',
-        name: "Dinh",
-        address: "hue"
-    },
-    {
-        id: '2',
-        name: "Nam",
-        address: "quang nam"
-    },
-    {
-        id: '3',
-        name: "Tan",
-        address: "da nang"
-    },
-    {
-        id: '4',
-        name: "Hung",
-        address: "hue"
-    },
-    {
-        id: '5',
-        name: "Tri",
-        address: "quang tri"
-    },
-    {
-        id: '6',
-        name: "Anh",
-        address: "hue"
-    },
-    {
-        id: '7',
-        name: "Binh",
-        address: "da nang"
-    }
-]
+const studentsApi = 'http://localhost:3000/student';
 
 const App = () => {
     const [errorName, setErrorName] = useState('');
     const [errorAddress, setErrorAddress] = useState('');
-    const [listStudents, setListStudents] = useState(initialStudents);
+    const [listStudents, setListStudents] = useState([]);
     const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [isEdit, setIsEdit] = useState(false);
 
-    const handleSubmit = (e) => {
+    useEffect(() => {
+        async function fetchData() {
+            var result = await axios(studentsApi);
+            setListStudents(result.data);
+        }
+        fetchData();
+    }, []);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         var check = true;
         if (!name) {
@@ -75,6 +48,11 @@ const App = () => {
                     name,
                     address
                 }
+                await axios({
+                    method: "PUT",
+                    url: studentsApi + "/" + id,
+                    data: inputValue
+                })
                 newList.splice(idx, 1, inputValue);
                 setListStudents(newList);
                 setId('');
@@ -91,6 +69,11 @@ const App = () => {
                     ...listStudents,
                     inputValue
                 ]
+                await axios({
+                    method: "POST",
+                    url: studentsApi,
+                    data: inputValue
+                })
                 setListStudents(newList);
                 setName('');
                 setAddress('');
@@ -126,11 +109,15 @@ const App = () => {
         setIsEdit(true);
     }
 
-    const handleDelete = (student) => {
+    const handleDelete = async (student) => {
         if (confirm('Bạn có chắc muốn xóa ?')) {
             var newList = [...listStudents];
             var idx = newList.findIndex(st => st.id == student.id);
-            newList.splice(idx, 2);
+            await axios({
+                method: "DELETE",
+                url: studentsApi + '/' + student.id
+            })
+            newList.splice(idx, 1);
             setListStudents(newList);
         }
     }
