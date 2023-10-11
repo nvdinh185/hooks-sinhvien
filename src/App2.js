@@ -130,7 +130,7 @@ const App = () => {
         if (confirm('Bạn có chắc muốn xóa ?')) {
             var newList = [...listStudents];
             var idx = newList.findIndex(st => st.id == student.id);
-            newList.splice(idx, 2);
+            newList.splice(idx, 1);
             setListStudents(newList);
         }
     }
