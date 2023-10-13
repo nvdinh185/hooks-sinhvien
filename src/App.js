@@ -39,127 +39,36 @@ var initialStudents = [
 ]
 
 const App = () => {
-    const [errorName, setErrorName] = useState('');
-    const [errorAddress, setErrorAddress] = useState('');
+
     const [listStudents, setListStudents] = useState(initialStudents);
-    const [id, setId] = useState('');
-    const [name, setName] = useState('');
-    const [address, setAddress] = useState('');
-    const [isEdit, setIsEdit] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formValue = {};
-        for (const el of e.target) {
-            if (el.name) {
-                formValue[el.name] = el.value;
-            }
-        }
-        var check = true;
-        if (!formValue['name']) {
-            setErrorName('Vui lòng nhập tên');
-            check = false;
-        }
-        if (!formValue['address']) {
-            setErrorAddress('Vui lòng nhập địa chỉ');
-            check = false;
-        }
 
-        function generateUuid() {
-            return 'xxxx-xxxx-xxx-xxxx'.replace(/[x]/g, function (c) {
-                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-                return v.toString(16);
-            });
-        }
-
-        if (check) {
-            if (formValue['id']) {
-                var edId = formValue['id'];
-                var newList = [...listStudents];
-                var idx = newList.findIndex(student => student.id == edId);
-                newList.splice(idx, 1, formValue);
-                setListStudents(newList);
-                setId('');
-                setName('');
-                setAddress('');
-                setIsEdit(false);
-            } else {
-                formValue['id'] = generateUuid();
-                var newList = [
-                    ...listStudents,
-                    formValue
-                ]
-                setListStudents(newList);
-                setName('');
-                setAddress('');
-            }
-        }
-    }
-
-    const handleBlur = (e) => {
-        if (e.target.name == 'name') {
-            if (!e.target.value) {
-                setErrorName('Vui lòng nhập tên');
-            }
-        } else if (e.target.name == 'address') {
-            if (!e.target.value) {
-                setErrorAddress('Vui lòng nhập địa chỉ');
-            }
-        }
-    }
-
-    const handleInput = (e) => {
-        if (e.target.name == 'name') {
-            setErrorName('');
-        } else if (e.target.name == 'address') {
-            setErrorAddress('');
-        }
     }
 
     const handleClickEdit = (student) => {
-        // console.log(student);
-        setId(student.id);
-        setName(student.name);
-        setAddress(student.address);
-        setIsEdit(true);
+
     }
 
     const handleDelete = (student) => {
-        if (confirm('Bạn có chắc muốn xóa ?')) {
-            var newList = [...listStudents];
-            var idx = newList.findIndex(st => st.id == student.id);
-            newList.splice(idx, 1);
-            setListStudents(newList);
-        }
+
     }
 
     return (
         <>
             <form onSubmit={(e) => handleSubmit(e)}>
-                <input type='hidden' name='id' value={id} />
                 <div>
                     <label>Tên</label>
-                    <input onBlur={(e) => handleBlur(e)} onInput={(e) => handleInput(e)} type="text"
-                        name="name" className={errorName && 'invalid'} value={name}
-                        onChange={(e) => { setName(e.target.value) }} />
-                    <span style={{
-                        color: 'red',
-                        fontStyle: 'italic'
-                    }}>{errorName}</span>
+                    <input type="text" name="name" />
                 </div>
                 <br />
                 <div>
                     <label>Địa chỉ</label>
-                    <input onBlur={(e) => handleBlur(e)} onInput={(e) => handleInput(e)} type="text"
-                        name="address" className={errorAddress && 'invalid'} value={address}
-                        onChange={(e) => { setAddress(e.target.value) }} />
-                    <span style={{
-                        color: 'red',
-                        fontStyle: 'italic'
-                    }}>{errorAddress}</span>
+                    <input type="text" name="address" />
                 </div>
                 <div>
-                    <button>{isEdit ? 'Sửa' : 'Thêm'}</button>
+                    <button>Thêm</button>
                 </div>
             </form>
             <ul>
