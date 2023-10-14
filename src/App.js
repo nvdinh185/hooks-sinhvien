@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Student from './components/Student';
 
 var initialStudents = [
     {
@@ -49,18 +50,12 @@ const App = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formValue = {};
-        for (const el of e.target) {
-            if (el.name) {
-                formValue[el.name] = el.value;
-            }
-        }
         var check = true;
-        if (!formValue['name']) {
+        if (!name) {
             setErrorName('Vui lòng nhập tên');
             check = false;
         }
-        if (!formValue['address']) {
+        if (!address) {
             setErrorAddress('Vui lòng nhập địa chỉ');
             check = false;
         }
@@ -73,21 +68,29 @@ const App = () => {
         }
 
         if (check) {
-            if (formValue['id']) {
-                var edId = formValue['id'];
+            if (isEdit) {
                 var newList = [...listStudents];
-                var idx = newList.findIndex(student => student.id == edId);
-                newList.splice(idx, 1, formValue);
+                var idx = newList.findIndex(student => student.id == id);
+                var inputValue = {
+                    id,
+                    name,
+                    address
+                }
+                newList.splice(idx, 1, inputValue);
                 setListStudents(newList);
                 setId('');
                 setName('');
                 setAddress('');
                 setIsEdit(false);
             } else {
-                formValue['id'] = generateUuid();
+                var inputValue = {
+                    id: generateUuid(),
+                    name,
+                    address
+                }
                 var newList = [
                     ...listStudents,
-                    formValue
+                    inputValue
                 ]
                 setListStudents(newList);
                 setName('');
@@ -164,12 +167,13 @@ const App = () => {
             </form>
             <ul>
                 {listStudents.map((student, idx) =>
-                    <li key={idx}>
-                        <h2>Name: {student.name}</h2>
-                        <p>Address: {student.address}</p>
-                        <button onClick={() => handleClickEdit(student)}>Sửa</button>
-                        <button onClick={() => handleDelete(student)}>Xóa</button>
-                    </li>
+                    <Student
+                        key={idx}
+                        name={student.name}
+                        address={student.address}
+                        onClickEdit={() => handleClickEdit(student)}
+                        onClickDelete={() => handleDelete(student)}
+                    />
                 )}
             </ul>
         </>
