@@ -51,7 +51,6 @@ const App = () => {
             address: ""
         });
 
-
     const handleSubmit = (student) => {
         if (isEdit) {
             let newList = [...listStudents];
@@ -66,8 +65,6 @@ const App = () => {
             setListStudents(newList);
         }
     }
-
-
 
     const handleClickEdit = (student) => {
         setFormData(student);
