@@ -14,7 +14,7 @@ const App = () => {
 
     useEffect(() => {
         async function fetchData() {
-            var result = await axios(studentsApi);
+            let result = await axios(studentsApi);
             setListStudents(result.data);
         }
         fetchData();
@@ -22,7 +22,7 @@ const App = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        var check = true;
+        let check = true;
         if (!name) {
             setErrorName('Vui lòng nhập tên');
             check = false;
@@ -34,16 +34,14 @@ const App = () => {
 
         function generateUuid() {
             return 'xxxx-xxxx-xxx-xxxx'.replace(/[x]/g, function (c) {
-                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });
         }
 
         if (check) {
             if (isEdit) {
-                var newList = [...listStudents];
-                var idx = newList.findIndex(student => student.id == id);
-                var inputValue = {
+                let inputValue = {
                     id,
                     name,
                     address
@@ -53,6 +51,8 @@ const App = () => {
                     url: studentsApi + "/" + id,
                     data: inputValue
                 })
+                let newList = [...listStudents];
+                let idx = newList.findIndex(student => student.id == id);
                 newList.splice(idx, 1, inputValue);
                 setListStudents(newList);
                 setId('');
@@ -60,20 +60,20 @@ const App = () => {
                 setAddress('');
                 setIsEdit(false);
             } else {
-                var inputValue = {
+                let inputValue = {
                     id: generateUuid(),
                     name,
                     address
                 }
-                var newList = [
-                    ...listStudents,
-                    inputValue
-                ]
                 await axios({
                     method: "POST",
                     url: studentsApi,
                     data: inputValue
                 })
+                let newList = [
+                    ...listStudents,
+                    inputValue
+                ]
                 setListStudents(newList);
                 setName('');
                 setAddress('');
@@ -111,12 +111,12 @@ const App = () => {
 
     const handleDelete = async (student) => {
         if (confirm('Bạn có chắc muốn xóa ?')) {
-            var newList = [...listStudents];
-            var idx = newList.findIndex(st => st.id == student.id);
             await axios({
                 method: "DELETE",
                 url: studentsApi + '/' + student.id
             })
+            let newList = [...listStudents];
+            let idx = newList.findIndex(st => st.id == student.id);
             newList.splice(idx, 1);
             setListStudents(newList);
         }
