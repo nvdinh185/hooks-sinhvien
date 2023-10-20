@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Student from './components/Student';
 import FormInput from './components/FormInput';
 
-var initialStudents = [
+let initialStudents = [
     {
         id: '1',
         name: "Dinh",
