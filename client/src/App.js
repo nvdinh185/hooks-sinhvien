@@ -1,97 +1,95 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 
-var initialStudents = [
-    {
-        id: '1',
-        name: "Dinh",
-        address: "hue"
-    },
-    {
-        id: '2',
-        name: "Nam",
-        address: "quang nam"
-    },
-    {
-        id: '3',
-        name: "Tan",
-        address: "da nang"
-    },
-    {
-        id: '4',
-        name: "Hung",
-        address: "hue"
-    },
-    {
-        id: '5',
-        name: "Tri",
-        address: "quang tri"
-    },
-    {
-        id: '6',
-        name: "Anh",
-        address: "hue"
-    },
-    {
-        id: '7',
-        name: "Binh",
-        address: "da nang"
-    }
-]
+const studentsApi = 'http://localhost:3001/student';
 
 const App = () => {
     const [errorName, setErrorName] = useState('');
     const [errorAddress, setErrorAddress] = useState('');
-    const [listStudents, setListStudents] = useState(initialStudents);
+    const [listStudents, setListStudents] = useState([]);
     const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [isEdit, setIsEdit] = useState(false);
+    const [error, setError] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const formValue = {};
-        for (const el of e.target) {
-            if (el.name) {
-                formValue[el.name] = el.value;
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                let result = await axios(studentsApi);
+                setListStudents(result.data);
+            } catch (err) {
+                setError('Xảy ra lỗi khi lấy dữ liệu!');
             }
         }
-        var check = true;
-        if (!formValue['name']) {
+        fetchData();
+    }, []);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        let check = true;
+        if (!name) {
             setErrorName('Vui lòng nhập tên');
             check = false;
         }
-        if (!formValue['address']) {
+        if (!address) {
             setErrorAddress('Vui lòng nhập địa chỉ');
             check = false;
         }
 
         function generateUuid() {
             return 'xxxx-xxxx-xxx-xxxx'.replace(/[x]/g, function (c) {
-                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });
         }
 
         if (check) {
-            if (formValue['id']) {
-                var edId = formValue['id'];
-                var newList = [...listStudents];
-                var idx = newList.findIndex(student => student.id == edId);
-                newList.splice(idx, 1, formValue);
-                setListStudents(newList);
-                setId('');
-                setName('');
-                setAddress('');
-                setIsEdit(false);
+            if (isEdit) {
+                let inputValue = {
+                    id,
+                    name,
+                    address
+                }
+                try {
+                    await axios({
+                        method: "PUT",
+                        url: studentsApi + "/" + id,
+                        data: inputValue
+                    })
+                    let newList = [...listStudents];
+                    let idx = newList.findIndex(student => student.id == id);
+                    newList.splice(idx, 1, inputValue);
+                    setListStudents(newList);
+                    setId('');
+                    setName('');
+                    setAddress('');
+                    setIsEdit(false);
+                } catch (error) {
+                    setError('Xảy ra lỗi khi sửa!');
+                }
             } else {
-                formValue['id'] = generateUuid();
-                var newList = [
-                    ...listStudents,
-                    formValue
-                ]
-                setListStudents(newList);
-                setName('');
-                setAddress('');
+                let inputValue = {
+                    id: generateUuid(),
+                    name,
+                    address
+                }
+                try {
+                    await axios({
+                        method: "POST",
+                        url: studentsApi,
+                        data: inputValue
+                    })
+                    let newList = [
+                        ...listStudents,
+                        inputValue
+                    ]
+                    setListStudents(newList);
+                    setName('');
+                    setAddress('');
+                } catch (error) {
+                    setError('Xảy ra lỗi khi thêm!');
+                }
             }
         }
     }
@@ -124,12 +122,20 @@ const App = () => {
         setIsEdit(true);
     }
 
-    const handleDelete = (student) => {
+    const handleDelete = async (student) => {
         if (confirm('Bạn có chắc muốn xóa ?')) {
-            var newList = [...listStudents];
-            var idx = newList.findIndex(st => st.id == student.id);
-            newList.splice(idx, 1);
-            setListStudents(newList);
+            try {
+                await axios({
+                    method: "DELETE",
+                    url: studentsApi + '/' + student.id
+                })
+                let newList = [...listStudents];
+                let idx = newList.findIndex(st => st.id == student.id);
+                newList.splice(idx, 1);
+                setListStudents(newList);
+            } catch (error) {
+                setError('Xảy ra lỗi khi xóa!');
+            }
         }
     }
 
@@ -162,6 +168,10 @@ const App = () => {
                     <button>{isEdit ? 'Sửa' : 'Thêm'}</button>
                 </div>
             </form>
+            <p style={{
+                color: 'red',
+                fontStyle: 'italic'
+            }}>{error}</p>
             <ul>
                 {listStudents.map((student, idx) =>
                     <li key={idx}>
