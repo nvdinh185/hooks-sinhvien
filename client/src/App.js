@@ -129,9 +129,10 @@ const App = () => {
                     method: "DELETE",
                     url: studentsApi + '/' + student.id
                 })
-                let newList = [...listStudents];
-                let idx = newList.findIndex(st => st.id == student.id);
-                newList.splice(idx, 1);
+                // let newList = [...listStudents];
+                // let idx = newList.findIndex(st => st.id == student.id);
+                // newList.splice(idx, 1);
+                let newList = listStudents.filter(std => std.id !== student.id);
                 setListStudents(newList);
             } catch (error) {
                 setError('Xảy ra lỗi khi xóa!');
