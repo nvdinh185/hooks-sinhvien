@@ -125,7 +125,7 @@ const App = () => {
     }
 
     const handleDelete = (student) => {
-        if (window.confirm('Bạn có chắc muốn xóa ?')) {
+        if (confirm('Bạn có chắc muốn xóa ?')) {
             // var newList = [...listStudents];
             // var idx = newList.findIndex(st => st.id == student.id);
             // newList.splice(idx, 1);
