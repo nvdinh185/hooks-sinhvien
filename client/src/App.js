@@ -123,7 +123,7 @@ const App = () => {
     }
 
     const handleDelete = async (student) => {
-        if (confirm('Bạn có chắc muốn xóa ?')) {
+        if (window.confirm('Bạn có chắc muốn xóa ?')) {
             try {
                 await axios({
                     method: "DELETE",
