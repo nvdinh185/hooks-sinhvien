@@ -72,7 +72,7 @@ const App = () => {
     }
 
     const handleDelete = (student) => {
-        if (confirm('Bạn có chắc muốn xóa ?')) {
+        if (window.confirm('Bạn có chắc muốn xóa ?')) {
             let newList = listStudents.filter(std => std.id !== student.id);
             setListStudents(newList);
         }
