@@ -61,7 +61,7 @@ const App = () => {
 
         function generateUuid() {
             return 'xxxx-xxxx-xxx-xxxx'.replace(/[x]/g, function (c) {
-                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });
         }
@@ -69,7 +69,7 @@ const App = () => {
         if (check) {
             if (isEdit) {
                 var newList = [...listStudents];
-                var idx = newList.findIndex(student => student.id == id);
+                var idx = newList.findIndex(student => student.id === id);
                 var inputValue = {
                     id,
                     name,
@@ -99,11 +99,11 @@ const App = () => {
     }
 
     const handleBlur = (e) => {
-        if (e.target.name == 'name') {
+        if (e.target.name === 'name') {
             if (!e.target.value) {
                 setErrorName('Vui lòng nhập tên');
             }
-        } else if (e.target.name == 'address') {
+        } else if (e.target.name === 'address') {
             if (!e.target.value) {
                 setErrorAddress('Vui lòng nhập địa chỉ');
             }
@@ -111,9 +111,9 @@ const App = () => {
     }
 
     const handleInput = (e) => {
-        if (e.target.name == 'name') {
+        if (e.target.name === 'name') {
             setErrorName('');
-        } else if (e.target.name == 'address') {
+        } else if (e.target.name === 'address') {
             setErrorAddress('');
         }
     }
@@ -142,9 +142,12 @@ const App = () => {
                 <input type='hidden' name='id' value={id} />
                 <div>
                     <label>Tên</label>
-                    <input onBlur={(e) => handleBlur(e)} onInput={(e) => handleInput(e)} type="text"
-                        name="name" className={errorName && 'invalid'} value={name}
-                        onChange={(e) => { setName(e.target.value) }} />
+                    <input type="text" name="name" value={name}
+                        onBlur={(e) => handleBlur(e)}
+                        onInput={(e) => handleInput(e)}
+                        className={errorName && 'invalid'}
+                        onChange={(e) => { setName(e.target.value) }}
+                    />
                     <span style={{
                         color: 'red',
                         fontStyle: 'italic'
@@ -153,9 +156,12 @@ const App = () => {
                 <br />
                 <div>
                     <label>Địa chỉ</label>
-                    <input onBlur={(e) => handleBlur(e)} onInput={(e) => handleInput(e)} type="text"
-                        name="address" className={errorAddress && 'invalid'} value={address}
-                        onChange={(e) => { setAddress(e.target.value) }} />
+                    <input type="text" name="address" value={address}
+                        onBlur={(e) => handleBlur(e)}
+                        onInput={(e) => handleInput(e)}
+                        className={errorAddress && 'invalid'}
+                        onChange={(e) => { setAddress(e.target.value) }}
+                    />
                     <span style={{
                         color: 'red',
                         fontStyle: 'italic'
