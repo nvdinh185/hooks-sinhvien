@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
-const studentsApi = 'http://localhost:3001/student';
+const studentsApi = 'http://localhost:3001/students';
 
 const App = () => {
     const [errorName, setErrorName] = useState('');
