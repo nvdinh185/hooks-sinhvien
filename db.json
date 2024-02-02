@@ -1,0 +1,19 @@
+{
+  "students": [
+    {
+      "id": "1813-1a0b-1c0-ee4e",
+      "name": "Dinh Nguyen",
+      "address": "da nang"
+    },
+    {
+      "id": "1273-8323-741-1d7a",
+      "name": "Le Thi Be",
+      "address": "quang nam"
+    },
+    {
+      "id": "09ed-43d5-4e9-e7f0",
+      "name": "Tran Van Tun",
+      "address": "quang tri"
+    }
+  ]
+}
