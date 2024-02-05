@@ -39,7 +39,7 @@ const App = () => {
 
         function generateUuid() {
             return 'xxxx-xxxx-xxx-xxxx'.replace(/[x]/g, function (c) {
-                let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 || 0x8);
                 return v.toString(16);
             });
         }
@@ -58,7 +58,7 @@ const App = () => {
                         data: inputValue
                     })
                     let newList = [...listStudents];
-                    let idx = newList.findIndex(student => student.id == id);
+                    let idx = newList.findIndex(student => student.id === id);
                     newList.splice(idx, 1, inputValue);
                     setListStudents(newList);
                     setId('');
@@ -95,11 +95,11 @@ const App = () => {
     }
 
     const handleBlur = (e) => {
-        if (e.target.name == 'name') {
+        if (e.target.name === 'name') {
             if (!e.target.value) {
                 setErrorName('Vui lòng nhập tên');
             }
-        } else if (e.target.name == 'address') {
+        } else if (e.target.name === 'address') {
             if (!e.target.value) {
                 setErrorAddress('Vui lòng nhập địa chỉ');
             }
@@ -107,9 +107,9 @@ const App = () => {
     }
 
     const handleInput = (e) => {
-        if (e.target.name == 'name') {
+        if (e.target.name === 'name') {
             setErrorName('');
-        } else if (e.target.name == 'address') {
+        } else if (e.target.name === 'address') {
             setErrorAddress('');
         }
     }
@@ -130,7 +130,7 @@ const App = () => {
                     url: studentsApi + '/' + student.id
                 })
                 // let newList = [...listStudents];
-                // let idx = newList.findIndex(st => st.id == student.id);
+                // let idx = newList.findIndex(st => st.id === student.id);
                 // newList.splice(idx, 1);
                 let newList = listStudents.filter(std => std.id !== student.id);
                 setListStudents(newList);
