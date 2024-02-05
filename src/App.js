@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-var initialStudents = [
+let initialStudents = [
     {
         id: '1',
         name: "Dinh",
@@ -40,24 +40,11 @@ var initialStudents = [
 
 const App = () => {
 
-    const [listStudents, setListStudents] = useState(initialStudents);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-    }
-
-    const handleClickEdit = (student) => {
-
-    }
-
-    const handleDelete = (student) => {
-
-    }
+    const [listStudents] = useState(initialStudents);
 
     return (
         <>
-            <form onSubmit={(e) => handleSubmit(e)}>
+            <form>
                 <div>
                     <label>Tên</label>
                     <input type="text" name="name" />
@@ -76,8 +63,8 @@ const App = () => {
                     <li key={idx}>
                         <h2>Name: {student.name}</h2>
                         <p>Address: {student.address}</p>
-                        <button onClick={() => handleClickEdit(student)}>Sửa</button>
-                        <button onClick={() => handleDelete(student)}>Xóa</button>
+                        <button>Sửa</button>
+                        <button>Xóa</button>
                     </li>
                 )}
             </ul>
