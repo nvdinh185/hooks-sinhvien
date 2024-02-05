@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-let initialStudents = [
+var initialStudents = [
     {
         id: '1',
         name: "Dinh",
@@ -49,47 +49,45 @@ const App = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let check = true;
-        if (!name) {
+        const formValue = {};
+        for (const el of e.target) {
+            if (el.name) {
+                formValue[el.name] = el.value;
+            }
+        }
+        var check = true;
+        if (!formValue['name']) {
             setErrorName('Vui lòng nhập tên');
             check = false;
         }
-        if (!address) {
+        if (!formValue['address']) {
             setErrorAddress('Vui lòng nhập địa chỉ');
             check = false;
         }
 
         function generateUuid() {
             return 'xxxx-xxxx-xxx-xxxx'.replace(/[x]/g, function (c) {
-                let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 || 0x8);
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });
         }
 
         if (check) {
-            if (isEdit) {
-                let newList = [...listStudents];
-                let idx = newList.findIndex(student => student.id === id);
-                let inputValue = {
-                    id,
-                    name,
-                    address
-                }
-                newList.splice(idx, 1, inputValue);
+            if (formValue['id']) {
+                var edId = formValue['id'];
+                var newList = [...listStudents];
+                var idx = newList.findIndex(student => student.id == edId);
+                newList.splice(idx, 1, formValue);
                 setListStudents(newList);
                 setId('');
                 setName('');
                 setAddress('');
                 setIsEdit(false);
             } else {
-                let inputValue = {
-                    id: generateUuid(),
-                    name,
-                    address
-                }
-                let newList = [
+                formValue['id'] = generateUuid();
+                var newList = [
                     ...listStudents,
-                    inputValue
+                    formValue
                 ]
                 setListStudents(newList);
                 setName('');
@@ -99,11 +97,11 @@ const App = () => {
     }
 
     const handleBlur = (e) => {
-        if (e.target.name === 'name') {
+        if (e.target.name == 'name') {
             if (!e.target.value) {
                 setErrorName('Vui lòng nhập tên');
             }
-        } else if (e.target.name === 'address') {
+        } else if (e.target.name == 'address') {
             if (!e.target.value) {
                 setErrorAddress('Vui lòng nhập địa chỉ');
             }
@@ -111,9 +109,9 @@ const App = () => {
     }
 
     const handleInput = (e) => {
-        if (e.target.name === 'name') {
+        if (e.target.name == 'name') {
             setErrorName('');
-        } else if (e.target.name === 'address') {
+        } else if (e.target.name == 'address') {
             setErrorAddress('');
         }
     }
@@ -128,10 +126,10 @@ const App = () => {
 
     const handleDelete = (student) => {
         if (window.confirm('Bạn có chắc muốn xóa ?')) {
-            // let newList = [...listStudents];
-            // let idx = newList.findIndex(st => st.id === student.id);
+            // var newList = [...listStudents];
+            // var idx = newList.findIndex(st => st.id == student.id);
             // newList.splice(idx, 1);
-            let newList = listStudents.filter(std => std.id !== student.id);
+            var newList = listStudents.filter(std => std.id !== student.id);
             setListStudents(newList);
         }
     }
@@ -142,12 +140,9 @@ const App = () => {
                 <input type='hidden' name='id' value={id} />
                 <div>
                     <label>Tên</label>
-                    <input type="text" name="name" value={name}
-                        onBlur={(e) => handleBlur(e)}
-                        onInput={(e) => handleInput(e)}
-                        className={errorName && 'invalid'}
-                        onChange={(e) => { setName(e.target.value) }}
-                    />
+                    <input onBlur={(e) => handleBlur(e)} onInput={(e) => handleInput(e)} type="text"
+                        name="name" className={errorName && 'invalid'} value={name}
+                        onChange={(e) => { setName(e.target.value) }} />
                     <span style={{
                         color: 'red',
                         fontStyle: 'italic'
@@ -156,12 +151,9 @@ const App = () => {
                 <br />
                 <div>
                     <label>Địa chỉ</label>
-                    <input type="text" name="address" value={address}
-                        onBlur={(e) => handleBlur(e)}
-                        onInput={(e) => handleInput(e)}
-                        className={errorAddress && 'invalid'}
-                        onChange={(e) => { setAddress(e.target.value) }}
-                    />
+                    <input onBlur={(e) => handleBlur(e)} onInput={(e) => handleInput(e)} type="text"
+                        name="address" className={errorAddress && 'invalid'} value={address}
+                        onChange={(e) => { setAddress(e.target.value) }} />
                     <span style={{
                         color: 'red',
                         fontStyle: 'italic'
