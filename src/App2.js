@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-var initialStudents = [
+let initialStudents = [
     {
         id: '1',
         name: "Dinh",
@@ -49,7 +49,7 @@ const App = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        var check = true;
+        let check = true;
         if (!name) {
             setErrorName('Vui lòng nhập tên');
             check = false;
@@ -61,16 +61,16 @@ const App = () => {
 
         function generateUuid() {
             return 'xxxx-xxxx-xxx-xxxx'.replace(/[x]/g, function (c) {
-                var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 || 0x8);
                 return v.toString(16);
             });
         }
 
         if (check) {
             if (isEdit) {
-                var newList = [...listStudents];
-                var idx = newList.findIndex(student => student.id === id);
-                var inputValue = {
+                let newList = [...listStudents];
+                let idx = newList.findIndex(student => student.id === id);
+                let inputValue = {
                     id,
                     name,
                     address
@@ -82,12 +82,12 @@ const App = () => {
                 setAddress('');
                 setIsEdit(false);
             } else {
-                var inputValue = {
+                let inputValue = {
                     id: generateUuid(),
                     name,
                     address
                 }
-                var newList = [
+                let newList = [
                     ...listStudents,
                     inputValue
                 ]
@@ -128,10 +128,10 @@ const App = () => {
 
     const handleDelete = (student) => {
         if (window.confirm('Bạn có chắc muốn xóa ?')) {
-            // var newList = [...listStudents];
-            // var idx = newList.findIndex(st => st.id == student.id);
+            // let newList = [...listStudents];
+            // let idx = newList.findIndex(st => st.id == student.id);
             // newList.splice(idx, 1);
-            var newList = listStudents.filter(std => std.id !== student.id);
+            let newList = listStudents.filter(std => std.id !== student.id);
             setListStudents(newList);
         }
     }
