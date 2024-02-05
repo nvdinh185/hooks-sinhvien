@@ -16,11 +16,11 @@ const FormInput = (props) => {
     }, [props.formData])
 
     const handleBlur = (e) => {
-        if (e.target.name == 'name') {
+        if (e.target.name === 'name') {
             if (!e.target.value) {
                 setErrorName('Vui lòng nhập tên');
             }
-        } else if (e.target.name == 'address') {
+        } else if (e.target.name === 'address') {
             if (!e.target.value) {
                 setErrorAddress('Vui lòng nhập địa chỉ');
             }
@@ -28,9 +28,9 @@ const FormInput = (props) => {
     }
 
     const handleInput = (e) => {
-        if (e.target.name == 'name') {
+        if (e.target.name === 'name') {
             setErrorName('');
-        } else if (e.target.name == 'address') {
+        } else if (e.target.name === 'address') {
             setErrorAddress('');
         }
     }
@@ -49,7 +49,7 @@ const FormInput = (props) => {
 
         function generateUuid() {
             return 'xxxx-xxxx-xxx-xxxx'.replace(/[x]/g, function (c) {
-                let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 || 0x8);
                 return v.toString(16);
             });
         }

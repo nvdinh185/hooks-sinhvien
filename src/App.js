@@ -54,7 +54,7 @@ const App = () => {
     const handleSubmit = (student) => {
         if (isEdit) {
             let newList = [...listStudents];
-            let idx = newList.findIndex(std => std.id == student.id);
+            let idx = newList.findIndex(std => std.id === student.id);
             newList.splice(idx, 1, student);
             setListStudents(newList);
         } else {
