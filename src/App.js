@@ -68,15 +68,14 @@ const App = () => {
 
         if (check) {
             if (isEdit) {
-                let newList = [...listStudents];
-                let idx = newList.findIndex(student => student.id === id);
+                let idx = listStudents.findIndex(student => student.id === id);
                 let inputValue = {
                     id,
                     name,
                     address
                 }
-                newList.splice(idx, 1, inputValue);
-                setListStudents(newList);
+                listStudents.splice(idx, 1, inputValue);
+                setListStudents(listStudents);
                 setId('');
                 setName('');
                 setAddress('');
@@ -87,11 +86,8 @@ const App = () => {
                     name,
                     address
                 }
-                let newList = [
-                    ...listStudents,
-                    inputValue
-                ]
-                setListStudents(newList);
+                listStudents.push(inputValue)
+                setListStudents(listStudents);
                 setName('');
                 setAddress('');
             }
