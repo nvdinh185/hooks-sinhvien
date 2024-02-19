@@ -6,13 +6,14 @@ const FormInput = (props) => {
     const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
+    const [isEdit, setIsEdit] = useState();
 
     useEffect(() => {
         let student = props.formData;
         setId(student.id);
         setName(student.name);
         setAddress(student.address);
-
+        setIsEdit(props.isEdit);
     }, [props.formData])
 
     const handleBlur = (e) => {
@@ -55,7 +56,7 @@ const FormInput = (props) => {
         }
 
         if (check) {
-            if (props.isEdit) {
+            if (isEdit) {
                 let inputValue = {
                     id,
                     name,
@@ -65,6 +66,7 @@ const FormInput = (props) => {
                 setId('');
                 setName('');
                 setAddress('');
+                setIsEdit(false);
             } else {
                 let inputValue = {
                     id: generateUuid(),
@@ -80,7 +82,7 @@ const FormInput = (props) => {
 
     return (
         <form onSubmit={(e) => handleSubmit(e)}>
-            {props.isEdit && <input type='hidden' name='id' value={id} />}
+            {isEdit && <input type='hidden' name='id' value={id} />}
             <div>
                 <label>Tên</label>
                 <input onBlur={(e) => handleBlur(e)} onInput={(e) => handleInput(e)} type="text"
@@ -103,7 +105,7 @@ const FormInput = (props) => {
                 }}>{errorAddress}</span>
             </div>
             <div>
-                <button>{props.isEdit ? 'Sửa' : 'Thêm'}</button>
+                <button>{isEdit ? 'Sửa' : 'Thêm'}</button>
             </div>
         </form>
     )
