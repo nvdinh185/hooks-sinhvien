@@ -1,16 +1,6 @@
 {
   "students": [
     {
-      "id": "1",
-      "name": "Hung",
-      "address": "hue"
-    },
-    {
-      "id": "4",
-      "name": "Dinh Nguyen",
-      "address": "da nang123"
-    },
-    {
       "id": "56a9-bf4f-0c4-05e9",
       "name": "Tran Van Tun",
       "address": "da nang"
@@ -18,7 +8,12 @@
     {
       "id": "067b-a8cc-fbd-a704",
       "name": "Dinh Nguyen",
-      "address": "da nang"
+      "address": "hue"
+    },
+    {
+      "id": "25da-87e2-4ca-a208",
+      "name": "Le Thi Be",
+      "address": "quang tri"
     }
   ]
 }
