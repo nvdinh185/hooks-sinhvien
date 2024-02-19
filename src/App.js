@@ -115,7 +115,6 @@ const App = () => {
     }
 
     const handleClickEdit = (student) => {
-        // console.log(student);
         setId(student.id);
         setName(student.name);
         setAddress(student.address);
@@ -124,9 +123,6 @@ const App = () => {
 
     const handleDelete = (student) => {
         if (window.confirm('Bạn có chắc muốn xóa ?')) {
-            // let newList = [...listStudents];
-            // let idx = newList.findIndex(st => st.id === student.id);
-            // newList.splice(idx, 1);
             let newList = listStudents.filter(std => std.id !== student.id);
             setListStudents(newList);
         }
