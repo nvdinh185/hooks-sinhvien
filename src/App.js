@@ -139,7 +139,7 @@ const App = () => {
     return (
         <>
             <form onSubmit={(e) => handleSubmit(e)}>
-                <input type='hidden' name='id' value={id} />
+                {isEdit && <input type='hidden' name='id' value={id} />}
                 <div>
                     <label>Tên</label>
                     <input type="text" name="name" value={name}
