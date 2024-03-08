@@ -85,9 +85,12 @@ const FormInput = (props) => {
             {isEdit && <input type='hidden' name='id' value={id} />}
             <div>
                 <label>Tên</label>
-                <input onBlur={(e) => handleBlur(e)} onInput={(e) => handleInput(e)} type="text"
-                    name="name" className={errorName && 'invalid'} value={name}
-                    onChange={(e) => { setName(e.target.value) }} />
+                <input type="text" name="name" value={name}
+                    onBlur={(e) => handleBlur(e)}
+                    onInput={(e) => handleInput(e)}
+                    className={errorName && 'invalid'}
+                    onChange={(e) => { setName(e.target.value) }}
+                />
                 <span style={{
                     color: 'red',
                     fontStyle: 'italic'
@@ -96,9 +99,12 @@ const FormInput = (props) => {
             <br />
             <div>
                 <label>Địa chỉ</label>
-                <input onBlur={(e) => handleBlur(e)} onInput={(e) => handleInput(e)} type="text"
-                    name="address" className={errorAddress && 'invalid'} value={address}
-                    onChange={(e) => { setAddress(e.target.value) }} />
+                <input type="text" name="address" value={address}
+                    onBlur={(e) => handleBlur(e)}
+                    onInput={(e) => handleInput(e)}
+                    className={errorAddress && 'invalid'}
+                    onChange={(e) => { setAddress(e.target.value) }}
+                />
                 <span style={{
                     color: 'red',
                     fontStyle: 'italic'
