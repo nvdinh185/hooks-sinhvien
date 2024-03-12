@@ -4,7 +4,7 @@ const Student = (props) => {
         props.onClickEdit();
     }
 
-    const handleDelete = () => {
+    const handleClickDelete = () => {
         props.onClickDelete();
     }
 
@@ -13,7 +13,7 @@ const Student = (props) => {
             <h2>Name: {props.name}</h2>
             <p>Address: {props.address}</p>
             <button onClick={() => handleClickEdit()}>Sửa</button>
-            <button onClick={() => handleDelete()}>Xóa</button>
+            <button onClick={() => handleClickDelete()}>Xóa</button>
         </li>
     )
 }
