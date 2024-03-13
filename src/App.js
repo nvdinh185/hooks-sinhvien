@@ -86,7 +86,7 @@ const App = () => {
                     name,
                     address
                 }
-                listStudents.push(inputValue)
+                listStudents.push(inputValue);
                 setListStudents(listStudents);
                 setName('');
                 setAddress('');
