@@ -16,6 +16,7 @@ const App = () => {
                     <button>Thêm</button>
                 </div>
             </form>
+            <h1>Danh sach sinh vien</h1>
             <ul>
                 <li>
                     <h2>Name: Định</h2>
